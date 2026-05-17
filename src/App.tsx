@@ -210,7 +210,7 @@ const getConnectedIds = (grid: Tile[]) => {
 const getSolved = (grid: Tile[]) => TARGET_PATH.every((id) => getConnectedIds(grid).has(id));
 
 export default function App() {
-  const [view, setView] = useState<View>('menu');
+  const [view, setView] = useState<View>('play');
   const [difficulty, setDifficultyState] = useState<Difficulty>('normal');
   const [grid, setGrid] = useState(() => createGrid('normal'));
   const [timer, setTimer] = useState(0);
@@ -438,8 +438,18 @@ export default function App() {
   };
 
   const boardActions: Partial<Record<GameBoardPlayActionId, () => void>> = {
+    'button-1-1': () => setView('help'),
+    'button-2-2': () => setView('settings'),
     'pause-uplink-3': () => setView('pause'),
     'reset-grid-4': resetGrid,
+    'grid-1': () => setView('play'),
+    'stages-2': () => setView('menu'),
+    'store-3': () => setView('settings'),
+    'rank-4': () => setView('gameOver'),
+    'grid-5': () => setView('play'),
+    'stages-6': () => setView('menu'),
+    'store-7': () => setView('settings'),
+    'rank-8': () => setView('gameOver'),
   };
 
   const settingsActions: Partial<Record<GameOptionsSettingsActionId, () => void>> = {
@@ -468,8 +478,8 @@ export default function App() {
   };
 
   return (
-    <main className="pulse-app" aria-label="Pulse Grid">
-      <section className="generated-screen" hidden>
+    <div className="pulse-app" aria-label="Pulse Grid">
+      <section className="generated-screen" aria-label="Generated Pulse Grid screen bridge">
         {view === 'menu' && <MainMenuMenu actions={menuActions} />}
         {view === 'play' && <GameBoardPlay actions={boardActions} />}
         {view === 'settings' && <GameOptionsSettings actions={settingsActions} />}
@@ -588,6 +598,6 @@ export default function App() {
           </section>
         )}
       </section>
-    </main>
+    </div>
   );
 }

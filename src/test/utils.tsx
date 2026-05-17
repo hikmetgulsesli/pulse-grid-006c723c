@@ -14,9 +14,9 @@ describe('window app bridge', () => {
 
     expect(globalThis.app?.state).toEqual(
       expect.objectContaining({
-        view: 'menu',
-        screen: 'menu',
-        status: 'menu',
+        view: 'play',
+        screen: 'play',
+        status: 'playing',
         paused: false,
         gameOver: false,
         progress: expect.any(Number),
