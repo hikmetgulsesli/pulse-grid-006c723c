@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Game Paused Overlay</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary": "#4ae176",
+                      "outline": "#87929a",
+                      "primary-fixed-dim": "#7bd0ff",
+                      "on-primary-container": "#004965",
+                      "outline-variant": "#3e484f",
+                      "on-surface-variant": "#bdc8d1",
+                      "on-primary-fixed-variant": "#004c69",
+                      "inverse-surface": "#dae2fd",
+                      "on-error-container": "#ffdad6",
+                      "primary-fixed": "#c4e7ff",
+                      "surface-container-high": "#222a3d",
+                      "on-tertiary-fixed-variant": "#2f3aa3",
+                      "on-secondary-container": "#004119",
+                      "secondary-fixed-dim": "#4ae176",
+                      "on-tertiary-container": "#2c37a0",
+                      "on-surface": "#dae2fd",
+                      "secondary-fixed": "#6bff8f",
+                      "tertiary": "#c5c9ff",
+                      "tertiary-fixed": "#e0e0ff",
+                      "on-secondary-fixed-variant": "#005321",
+                      "surface-container": "#171f33",
+                      "surface-tint": "#7bd0ff",
+                      "primary": "#8ed5ff",
+                      "surface-container-highest": "#2d3449",
+                      "tertiary-fixed-dim": "#bdc2ff",
+                      "on-error": "#690005",
+                      "tertiary-container": "#a3abff",
+                      "on-primary-fixed": "#001e2c",
+                      "on-secondary": "#003915",
+                      "background": "#0b1326",
+                      "on-tertiary-fixed": "#000767",
+                      "surface-container-lowest": "#060e20",
+                      "secondary-container": "#00b954",
+                      "error": "#ffb4ab",
+                      "on-primary": "#00354a",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#131e8c",
+                      "surface-dim": "#0b1326",
+                      "surface-bright": "#31394d",
+                      "surface-variant": "#2d3449",
+                      "inverse-on-surface": "#283044",
+                      "primary-container": "#38bdf8",
+                      "surface-container-low": "#131b2e",
+                      "on-background": "#dae2fd",
+                      "surface": "#0b1326",
+                      "inverse-primary": "#00668a",
+                      "on-secondary-fixed": "#002109"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "xl": "48px",
+                      "md": "16px",
+                      "base": "4px",
+                      "margin-desktop": "32px",
+                      "lg": "24px",
+                      "gutter": "16px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "label-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "headline-xl": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "data-display": [
+                              "JetBrains Mono"
+                      ],
+                      "body-sm": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "data-display": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(30, 41, 59, 0.2) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(30, 41, 59, 0.2) 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen overflow-hidden selection:bg-primary/30">
+<div class="fixed inset-0 z-0 bg-surface-dim bg-cover bg-center" data-alt="A highly detailed, immersive digital game environment shown from a top-down tactical perspective. The scene features a complex, futuristic city grid constructed from dark obsidian blocks illuminated by intense neon cyan and electric green laser pathways. The lighting is high-contrast and dramatic, emphasizing the cyber-minimalist aesthetic. The overall mood is tense and technologically advanced, with a heavy emphasis on geometric structures and glowing accents against a deep vacuum backdrop." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_6I2Fcb7xbRAkxwNyz816O9JvYxlI45q-zI8hZOsZy_lVdkjV2bhb8r0HrRHw6oqPfWumyOiJ6EUX25HC6GOICpxZg-i51m_3C1xiUdvHKhGHyBSMzSLs_zFqPToid2l2TAJWztL7Nf1b350zEmsV0josuMhmr2Xv99emPenqhu8yd5KPXuZLkpmbkHREL70hb86Z99Fkb33LTGGkVf3q7yfx6D0NEIu8yyy1OwOcjs6HwSBeJRoUvTWj3ZRbMM-hdiu8qyw0LzGF');">
+</div>
+<div class="fixed inset-0 z-10 bg-background/60 backdrop-blur-md"></div>
+<main class="fixed inset-0 z-50 flex items-center justify-center p-margin-mobile md:p-margin-desktop">
+<div class="relative w-full max-w-[480px] bg-surface-container/80 backdrop-blur-xl border border-primary/30 rounded-lg shadow-[0_0_24px_rgba(142,213,255,0.05)] overflow-hidden">
+<div class="absolute inset-0 z-0 cyber-grid opacity-50 pointer-events-none"></div>
+<div class="absolute top-0 left-0 w-full h-[2px] bg-primary shadow-[0_0_12px_rgba(142,213,255,0.8)] z-10"></div>
+<div class="relative z-10 p-xl flex flex-col gap-lg">
+<div class="flex flex-col items-center justify-center text-center gap-xs">
+<span class="material-symbols-outlined text-primary mb-sm" style="font-size: 32px; font-variation-settings: 'FILL' 1;">pause_circle</span>
+<h1 class="font-headline-xl text-headline-xl text-primary tracking-tight uppercase">Game Paused</h1>
+<div class="w-12 h-[1px] bg-outline-variant/50 mt-sm"></div>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="relative group bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md flex flex-col items-center justify-center overflow-hidden transition-colors hover:border-primary/40 hover:bg-surface-container-low">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-primary/20 group-hover:bg-primary transition-colors"></div>
+<span class="font-label-mono text-label-mono text-outline uppercase tracking-widest mb-xs">Sector</span>
+<span class="font-data-display text-data-display text-on-surface">14</span>
+</div>
+<div class="relative group bg-surface-container-lowest border border-outline-variant/30 rounded-DEFAULT p-md flex flex-col items-center justify-center overflow-hidden transition-colors hover:border-primary/40 hover:bg-surface-container-low">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-primary/20 group-hover:bg-primary transition-colors"></div>
+<span class="font-label-mono text-label-mono text-outline uppercase tracking-widest mb-xs">Score</span>
+<span class="font-data-display text-data-display text-on-surface">84,200</span>
+</div>
+</div>
+<div class="flex flex-col gap-sm mt-sm">
+<button class="w-full relative group overflow-hidden rounded-lg bg-primary text-on-primary py-md px-lg flex items-center justify-center gap-sm transition-all duration-300 hover:shadow-[0_0_16px_rgba(142,213,255,0.4)] active:scale-[0.98]">
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+<span class="material-symbols-outlined relative z-10" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="font-data-display text-data-display uppercase relative z-10">Resume Game</span>
+</button>
+<div class="grid grid-cols-2 gap-sm">
+<button class="w-full bg-transparent border border-primary/30 rounded-lg py-sm px-md flex items-center justify-center gap-xs transition-all duration-300 hover:bg-primary/10 hover:border-primary/60 hover:text-primary-fixed active:scale-[0.98] group">
+<span class="material-symbols-outlined text-primary group-hover:text-primary-fixed text-[18px]">refresh</span>
+<span class="font-label-mono text-label-mono text-primary group-hover:text-primary-fixed uppercase tracking-wide">Restart Level</span>
+</button>
+<button class="w-full bg-transparent border border-primary/30 rounded-lg py-sm px-md flex items-center justify-center gap-xs transition-all duration-300 hover:bg-primary/10 hover:border-primary/60 hover:text-primary-fixed active:scale-[0.98] group">
+<span class="material-symbols-outlined text-primary group-hover:text-primary-fixed text-[18px]">grid_view</span>
+<span class="font-label-mono text-label-mono text-primary group-hover:text-primary-fixed uppercase tracking-wide">Main Menu</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

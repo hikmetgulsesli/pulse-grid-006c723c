@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How to Play - PULSE_GRID</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#4ae176",
+                        "outline": "#87929a",
+                        "primary-fixed-dim": "#7bd0ff",
+                        "on-primary-container": "#004965",
+                        "outline-variant": "#3e484f",
+                        "on-surface-variant": "#bdc8d1",
+                        "on-primary-fixed-variant": "#004c69",
+                        "inverse-surface": "#dae2fd",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#c4e7ff",
+                        "surface-container-high": "#222a3d",
+                        "on-tertiary-fixed-variant": "#2f3aa3",
+                        "on-secondary-container": "#004119",
+                        "secondary-fixed-dim": "#4ae176",
+                        "on-tertiary-container": "#2c37a0",
+                        "on-surface": "#dae2fd",
+                        "secondary-fixed": "#6bff8f",
+                        "tertiary": "#c5c9ff",
+                        "tertiary-fixed": "#e0e0ff",
+                        "on-secondary-fixed-variant": "#005321",
+                        "surface-container": "#171f33",
+                        "surface-tint": "#7bd0ff",
+                        "primary": "#8ed5ff",
+                        "surface-container-highest": "#2d3449",
+                        "tertiary-fixed-dim": "#bdc2ff",
+                        "on-error": "#690005",
+                        "tertiary-container": "#a3abff",
+                        "on-primary-fixed": "#001e2c",
+                        "on-secondary": "#003915",
+                        "background": "#0b1326",
+                        "on-tertiary-fixed": "#000767",
+                        "surface-container-lowest": "#060e20",
+                        "secondary-container": "#00b954",
+                        "error": "#ffb4ab",
+                        "on-primary": "#00354a",
+                        "error-container": "#93000a",
+                        "on-tertiary": "#131e8c",
+                        "surface-dim": "#0b1326",
+                        "surface-bright": "#31394d",
+                        "surface-variant": "#2d3449",
+                        "inverse-on-surface": "#283044",
+                        "primary-container": "#38bdf8",
+                        "surface-container-low": "#131b2e",
+                        "on-background": "#dae2fd",
+                        "surface": "#0b1326",
+                        "inverse-primary": "#00668a",
+                        "on-secondary-fixed": "#002109"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "xl": "48px",
+                        "md": "16px",
+                        "base": "4px",
+                        "margin-desktop": "32px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-xl": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "data-display": ["JetBrains Mono"],
+                        "body-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "data-display": ["18px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #020617; } /* Level 0 Obsidian base override */
+        
+        /* Grid Overlay Pattern */
+        .bg-pulse-grid {
+            background-image: 
+                linear-gradient(to right, rgba(30, 41, 59, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(30, 41, 59, 0.05) 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+
+        /* Luminous Layers / Glows */
+        .glow-active:hover {
+            box-shadow: 0px 0px 12px rgba(142, 213, 255, 0.1);
+        }
+        
+        /* Glow Corners */
+        .glow-corners {
+            position: relative;
+        }
+        .glow-corners::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 8px; height: 8px;
+            border-top: 2px solid #8ed5ff;
+            border-left: 2px solid #8ed5ff;
+            border-top-left-radius: 0.125rem;
+        }
+        .glow-corners::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 8px; height: 8px;
+            border-bottom: 2px solid #8ed5ff;
+            border-right: 2px solid #8ed5ff;
+            border-bottom-right-radius: 0.125rem;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md bg-pulse-grid">
+<!-- TopAppBar -->
+<header class="bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 fixed top-0 z-50">
+<div class="flex items-center gap-sm cursor-pointer hover:text-secondary hover:bg-secondary/10 transition-all duration-300 p-sm rounded active:scale-95 duration-100 text-primary border-b-2 border-primary pt-2">
+<span class="material-symbols-outlined text-headline-lg-mobile" data-icon="arrow_back">arrow_back</span>
+<span class="font-label-mono text-data-display font-bold tracking-tighter text-primary">PULSE_GRID</span>
+</div>
+<div class="flex gap-lg">
+<button class="text-on-surface-variant hover:text-secondary hover:bg-secondary/10 transition-all duration-300 p-sm rounded active:scale-95 duration-100 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary hover:bg-secondary/10 transition-all duration-300 p-sm rounded active:scale-95 duration-100 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow pt-24 pb-12 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto w-full">
+<header class="mb-lg border-b border-outline-variant/30 pb-md">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface uppercase tracking-wider flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="terminal">terminal</span>
+                HOW TO PLAY
+            </h1>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-4 md:grid-cols-12 gap-gutter">
+<!-- Section 1: Objective (Featured Card) -->
+<section class="col-span-4 md:col-span-12 bg-surface-container border border-outline-variant/50 rounded-DEFAULT glow-corners p-lg mb-sm glow-active transition-all duration-300 flex flex-col justify-between">
+<div class="border-b border-primary-fixed-dim/30 pb-sm mb-md">
+<h2 class="font-label-mono text-label-mono text-primary flex items-center gap-xs uppercase">
+<span class="material-symbols-outlined text-[16px]" data-icon="track_changes">track_changes</span>
+                        Objective
+                    </h2>
+</div>
+<div class="flex flex-col md:flex-row gap-lg items-start md:items-center">
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl leading-relaxed">
+                        Connect the <span class="text-secondary font-label-mono px-xs bg-secondary/15 rounded-[2px]">source</span> to the <span class="text-error font-label-mono px-xs bg-error/15 rounded-[2px]">terminal node</span>. Avoid signal loops to maintain grid stability.
+                    </p>
+<div class="h-2 flex-grow bg-surface-container-high rounded-full overflow-hidden w-full md:w-auto relative border border-outline-variant/20 mt-4 md:mt-0">
+<div class="h-full bg-secondary w-2/3 relative rounded-full">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent w-full opacity-50 animate-[pulse_2s_ease-in-out_infinite]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Mouse & Touch -->
+<section class="col-span-4 md:col-span-6 bg-surface-container border border-outline-variant/30 rounded-DEFAULT p-md glow-active transition-all duration-300 flex flex-col">
+<div class="border-b border-primary-fixed-dim/20 pb-xs mb-md">
+<h2 class="font-label-mono text-label-mono text-primary flex items-center gap-xs uppercase">
+<span class="material-symbols-outlined text-[16px]" data-icon="touch_app">touch_app</span>
+                        Mouse &amp; Touch
+                    </h2>
+</div>
+<ul class="space-y-sm flex-grow">
+<li class="flex items-start gap-md bg-surface-container-high/50 p-sm rounded border border-outline-variant/10">
+<span class="material-symbols-outlined text-secondary" data-icon="rotate_right">rotate_right</span>
+<div>
+<span class="font-label-mono text-label-mono text-on-surface block mb-xs">Click/Tap</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Rotate nodes clockwise to align connections.</span>
+</div>
+</li>
+<li class="flex items-start gap-md bg-surface-container-high/50 p-sm rounded border border-outline-variant/10">
+<span class="material-symbols-outlined text-secondary" data-icon="pan_tool">pan_tool</span>
+<div>
+<span class="font-label-mono text-label-mono text-on-surface block mb-xs">Drag</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Pan across the expansive pulse grid canvas.</span>
+</div>
+</li>
+</ul>
+</section>
+<!-- Section 3: Keyboard -->
+<section class="col-span-4 md:col-span-6 bg-surface-container border border-outline-variant/30 rounded-DEFAULT p-md glow-active transition-all duration-300 flex flex-col">
+<div class="border-b border-primary-fixed-dim/20 pb-xs mb-md">
+<h2 class="font-label-mono text-label-mono text-primary flex items-center gap-xs uppercase">
+<span class="material-symbols-outlined text-[16px]" data-icon="keyboard">keyboard</span>
+                        Keyboard
+                    </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+<div class="flex items-center gap-sm bg-surface-container-high/50 p-sm rounded border border-outline-variant/10">
+<div class="bg-surface border border-outline-variant rounded-[2px] px-sm py-xs font-label-mono text-label-mono text-on-surface shadow-sm">
+<span class="material-symbols-outlined text-[14px] align-middle" data-icon="open_with">open_with</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Navigate</span>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-high/50 p-sm rounded border border-outline-variant/10">
+<div class="bg-surface border border-outline-variant rounded-[2px] px-md py-xs font-label-mono text-label-mono text-on-surface shadow-sm text-center min-w-[60px]">
+                            SPACE
+                        </div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Pulse</span>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-high/50 p-sm rounded border border-outline-variant/10">
+<div class="bg-surface border border-outline-variant rounded-[2px] w-8 h-8 flex items-center justify-center font-label-mono text-label-mono text-on-surface shadow-sm">
+                            R
+                        </div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Reset</span>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-high/50 p-sm rounded border border-outline-variant/10">
+<div class="bg-surface border border-outline-variant rounded-[2px] w-8 h-8 flex items-center justify-center font-label-mono text-label-mono text-on-surface shadow-sm">
+                            P
+                        </div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Pause</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>
