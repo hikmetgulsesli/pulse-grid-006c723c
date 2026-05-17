@@ -270,7 +270,7 @@ export default function App() {
   const rotateTile = useCallback(
     (id: string) => {
       const tile = grid.find((currentTile) => currentTile.id === id);
-      if (solved || !tile || tile.locked) {
+      if (view !== 'play' || solved || !tile || tile.locked) {
         return;
       }
       setGrid((current) =>
@@ -279,7 +279,7 @@ export default function App() {
       setSelectedTile(id);
       setMoves((current) => current + 1);
     },
-    [grid, solved],
+    [grid, solved, view],
   );
 
   const setDifficulty = useCallback((nextDifficulty: Difficulty) => {
@@ -526,6 +526,7 @@ export default function App() {
             <div className="board" role="grid" aria-label="Signal routing grid">
               {grid.map((tile) => {
                 const isConnected = connectedIds.has(tile.id);
+                const tileDisabled = view !== 'play' || tile.locked;
                 return (
                   <button
                     key={tile.id}
@@ -536,7 +537,8 @@ export default function App() {
                     }`}
                     aria-label={`${tile.kind} tile ${tile.id}${isConnected ? ' connected' : ''}`}
                     aria-pressed={selectedTile === tile.id}
-                    disabled={tile.locked}
+                    aria-disabled={tileDisabled}
+                    disabled={tileDisabled}
                     onClick={() => rotateTile(tile.id)}
                   >
                     <span className="conduit" style={{ transform: `rotate(${tile.rotation * 90}deg)` }} />
