@@ -63,4 +63,28 @@ describe('window app bridge', () => {
     });
     expect(globalThis.app?.state.timer).toBe(3);
   });
+
+  it('ignores locked and missing tile rotations without counting moves', async () => {
+    render(<App />);
+
+    await waitFor(() => expect(globalThis.app).toBeDefined());
+
+    act(() => {
+      globalThis.app?.actions.startNewGame();
+    });
+    await waitFor(() => expect(globalThis.app?.state.status).toBe('playing'));
+    expect(globalThis.app?.state.selectedTile).toBe('0-2');
+
+    act(() => {
+      globalThis.app?.actions.rotateTile('0-2');
+      globalThis.app?.actions.rotateTile('missing-tile');
+    });
+    expect(globalThis.app?.state.moves).toBe(0);
+
+    act(() => {
+      globalThis.app?.actions.rotateTile('1-2');
+    });
+    await waitFor(() => expect(globalThis.app?.state.moves).toBe(1));
+    expect(globalThis.app?.state.selectedTile).toBe('1-2');
+  });
 });

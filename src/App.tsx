@@ -269,7 +269,8 @@ export default function App() {
 
   const rotateTile = useCallback(
     (id: string) => {
-      if (solved) {
+      const tile = grid.find((currentTile) => currentTile.id === id);
+      if (solved || !tile || tile.locked) {
         return;
       }
       setGrid((current) =>
@@ -278,7 +279,7 @@ export default function App() {
       setSelectedTile(id);
       setMoves((current) => current + 1);
     },
-    [solved],
+    [grid, solved],
   );
 
   const setDifficulty = useCallback((nextDifficulty: Difficulty) => {
