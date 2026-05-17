@@ -1,0 +1,244 @@
+.pulse-app {
+  min-height: 100vh;
+  background: #0d1117;
+  color: #e8f2ff;
+  position: relative;
+  overflow: hidden;
+}
+
+.generated-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.game-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 24px;
+  padding: clamp(18px, 4vw, 40px);
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.game-topbar h1,
+.panel h2,
+.pause-card h2 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.game-topbar h1 {
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #6ee7b7;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.game-topbar nav,
+.menu-actions,
+.play-actions,
+.difficulty-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button {
+  border: 1px solid rgb(232 242 255 / 0.28);
+  border-radius: 8px;
+  background: rgb(13 17 23 / 0.84);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  min-height: 42px;
+  padding: 10px 14px;
+}
+
+button:hover,
+button:focus-visible {
+  border-color: #6ee7b7;
+  outline: none;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
+button.primary {
+  background: #6ee7b7;
+  border-color: #6ee7b7;
+  color: #07100d;
+}
+
+.panel,
+.play-layout {
+  align-self: center;
+  width: min(920px, 100%);
+  margin: 0 auto;
+}
+
+.panel {
+  display: grid;
+  gap: 18px;
+  padding: clamp(20px, 4vw, 34px);
+  border: 1px solid rgb(232 242 255 / 0.2);
+  border-radius: 8px;
+  background: rgb(9 13 20 / 0.9);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.28);
+}
+
+.menu-panel {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+
+.menu-panel h2 {
+  max-width: 680px;
+  font-size: clamp(1.8rem, 3vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.play-layout {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(92px, 1fr));
+  gap: 10px;
+  width: min(620px, 100%);
+}
+
+.stats span {
+  border: 1px solid rgb(232 242 255 / 0.18);
+  border-radius: 8px;
+  background: rgb(9 13 20 / 0.86);
+  color: #9fb1c8;
+  padding: 10px 12px;
+}
+
+.stats strong {
+  display: block;
+  color: #e8f2ff;
+  font-size: 1.25rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(44px, 84px));
+  gap: 8px;
+  width: min(460px, 100%);
+  aspect-ratio: 1;
+}
+
+.tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0;
+  aspect-ratio: 1;
+  border-color: rgb(232 242 255 / 0.22);
+  background: #121a25;
+}
+
+.tile.selected {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgb(251 191 36 / 0.18);
+}
+
+.tile.connected {
+  background: #123427;
+}
+
+.conduit {
+  width: 72%;
+  height: 72%;
+  border-radius: 8px;
+  transition: transform 160ms ease;
+}
+
+.tile-line .conduit {
+  background: linear-gradient(90deg, transparent 39%, #7dd3fc 39% 61%, transparent 61%);
+}
+
+.tile-corner .conduit {
+  background:
+    linear-gradient(90deg, transparent 39%, #7dd3fc 39% 61%, transparent 61%),
+    linear-gradient(180deg, transparent 0 39%, #7dd3fc 39% 61%, transparent 61%);
+  clip-path: polygon(39% 0, 61% 0, 61% 39%, 100% 39%, 100% 61%, 39% 61%, 39% 0);
+}
+
+.tile-tee .conduit {
+  background:
+    linear-gradient(90deg, transparent 39%, #7dd3fc 39% 61%, transparent 61%),
+    linear-gradient(180deg, transparent 39%, #7dd3fc 39% 61%, transparent 61%);
+}
+
+.tile-source .conduit,
+.tile-target .conduit {
+  border-radius: 999px;
+  background: radial-gradient(circle, #6ee7b7 0 30%, #7dd3fc 31% 48%, transparent 49%);
+}
+
+.pause-card {
+  display: grid;
+  gap: 12px;
+  width: min(360px, 92vw);
+  padding: 22px;
+  border: 1px solid rgb(232 242 255 / 0.26);
+  border-radius: 8px;
+  background: rgb(9 13 20 / 0.96);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.34);
+}
+
+.panel p {
+  max-width: 62ch;
+  margin: 0;
+  color: #b8c7db;
+}
+
+.result-panel {
+  justify-items: start;
+}
+
+@media (max-width: 720px) {
+  .game-topbar,
+  .menu-panel {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .game-shell {
+    padding: 16px;
+  }
+}
