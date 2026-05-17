@@ -30,15 +30,32 @@ interface Tile {
 
 interface AppState {
   view: View;
+  screen: View;
+  status: 'menu' | 'playing' | 'paused' | 'settings' | 'help' | 'gameOver';
+  progress: number;
+  paused: boolean;
+  gameOver: boolean;
   difficulty: Difficulty;
   level: number;
   score: number;
   timer: number;
   highScore: number;
+  storage: {
+    key: string;
+    available: boolean;
+    status: 'available' | 'unavailable' | 'error';
+  };
+  lastError: string | null;
   moves: number;
   solved: boolean;
   selectedTile: string;
   grid: Tile[];
+  entities: {
+    boardSize: number;
+    targetPath: string[];
+    connectedIds: string[];
+    tiles: Tile[];
+  };
 }
 
 interface AppActions {
@@ -46,6 +63,7 @@ interface AppActions {
   resumeGame: () => void;
   pauseGame: () => void;
   resetGrid: () => void;
+  tick: (seconds?: number) => void;
   rotateTile: (id: string) => void;
   selectTile: (id: string) => void;
   openSettings: () => void;
@@ -123,8 +141,23 @@ const oppositeDirection: Record<Direction, Direction> = {
 };
 
 const readHighScore = () => {
-  const value = Number(window.localStorage.getItem(STORAGE_KEY) ?? 0);
-  return Number.isFinite(value) ? value : 0;
+  try {
+    const value = Number(window.localStorage.getItem(STORAGE_KEY) ?? 0);
+    return Number.isFinite(value) ? value : 0;
+  } catch {
+    return 0;
+  }
+};
+
+const getStorageStatus = (): AppState['storage'] => {
+  try {
+    const testKey = `${STORAGE_KEY}-probe`;
+    window.localStorage.setItem(testKey, '1');
+    window.localStorage.removeItem(testKey);
+    return { key: STORAGE_KEY, available: true, status: 'available' };
+  } catch {
+    return { key: STORAGE_KEY, available: false, status: 'unavailable' };
+  }
 };
 
 const createGrid = (difficulty: Difficulty) =>
@@ -185,14 +218,33 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(readHighScore);
   const [selectedTile, setSelectedTile] = useState('0-2');
+  const [lastError, setLastError] = useState<string | null>(null);
 
   const connectedIds = useMemo(() => getConnectedIds(grid), [grid]);
+  const connectedIdList = useMemo(() => Array.from(connectedIds), [connectedIds]);
   const solved = connectedIds.has('4-2') && getSolved(grid);
+  const paused = view === 'pause';
+  const gameOver = view === 'gameOver';
+  const progress = Math.round((TARGET_PATH.filter((id) => connectedIds.has(id)).length / TARGET_PATH.length) * 100);
+  const storage = useMemo(() => getStorageStatus(), []);
+  const status: AppState['status'] =
+    view === 'play'
+      ? 'playing'
+      : view === 'pause'
+        ? 'paused'
+        : view === 'gameOver'
+          ? 'gameOver'
+          : view;
 
   const persistHighScore = useCallback((nextScore: number) => {
     setHighScore((current) => {
       const next = Math.max(current, nextScore);
-      window.localStorage.setItem(STORAGE_KEY, String(next));
+      try {
+        window.localStorage.setItem(STORAGE_KEY, String(next));
+        setLastError(null);
+      } catch (error) {
+        setLastError(error instanceof Error ? error.message : 'Unable to save high score');
+      }
       return next;
     });
   }, []);
@@ -237,12 +289,24 @@ export default function App() {
     setTimer(0);
   }, []);
 
+  const tick = useCallback(
+    (seconds = 1) => {
+      if (view !== 'play' || solved) {
+        return;
+      }
+      const normalizedSeconds = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 1;
+      setTimer((current) => current + normalizedSeconds);
+    },
+    [solved, view],
+  );
+
   const actions = useMemo<AppActions>(
     () => ({
       startNewGame,
       resumeGame: () => setView('play'),
       pauseGame: () => setView('pause'),
       resetGrid,
+      tick,
       rotateTile,
       selectTile: setSelectedTile,
       openSettings: () => setView('settings'),
@@ -250,23 +314,53 @@ export default function App() {
       openMenu: () => setView('menu'),
       setDifficulty,
     }),
-    [resetGrid, rotateTile, setDifficulty, startNewGame],
+    [resetGrid, rotateTile, setDifficulty, startNewGame, tick],
   );
 
   const state = useMemo<AppState>(
     () => ({
       view,
+      screen: view,
+      status,
+      progress,
+      paused,
+      gameOver,
       difficulty,
       level: 14,
       score,
       timer,
       highScore,
+      storage,
+      lastError,
       moves,
       solved,
       selectedTile,
       grid,
+      entities: {
+        boardSize: BOARD_SIZE,
+        targetPath: [...TARGET_PATH],
+        connectedIds: connectedIdList,
+        tiles: grid,
+      },
     }),
-    [difficulty, grid, highScore, moves, score, selectedTile, solved, timer, view],
+    [
+      connectedIdList,
+      difficulty,
+      gameOver,
+      grid,
+      highScore,
+      lastError,
+      moves,
+      paused,
+      progress,
+      score,
+      selectedTile,
+      solved,
+      status,
+      storage,
+      timer,
+      view,
+    ],
   );
 
   useEffect(() => {
@@ -282,9 +376,9 @@ export default function App() {
     if (view !== 'play' || solved) {
       return undefined;
     }
-    const interval = window.setInterval(() => setTimer((current) => current + 1), 1000);
+    const interval = window.setInterval(() => tick(), 1000);
     return () => window.clearInterval(interval);
-  }, [solved, view]);
+  }, [solved, tick, view]);
 
   useEffect(() => {
     if (!solved) {
